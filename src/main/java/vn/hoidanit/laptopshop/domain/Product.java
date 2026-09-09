@@ -2,12 +2,18 @@ package vn.hoidanit.laptopshop.domain;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -17,16 +23,37 @@ public class Product {
     private long id;
 
     @OneToMany(mappedBy = "product")
-    private List<OrderDetail> orderDetails;
+    List<OrderDetail> orderDetails;
 
+    @NotNull
+    @Size(min = 2, message = "detailDesc không được để trống")
     private String name;
+
+    @Min(value = 1, message = "Price must be greater than 0")
     private double price;
+
     private String image;
+
+    @NotNull
+    @Size(min = 1, message = "detailDesc không được để trống")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
+
+    @NotNull
     private String shortDesc;
+
+    @Min(value = 1, message = "Quantity must be greater than 0")
     private long quantity;
     private long sold;
     private String factory;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     private String target;
 
     public long getId() {

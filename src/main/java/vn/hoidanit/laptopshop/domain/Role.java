@@ -20,7 +20,7 @@ public class Role {
 
     private String description;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role") // Bang role la inverse side nen la mappedBy
     private List<User> users;
 
     public long getId() {
