@@ -49,7 +49,6 @@ public class ProductService {
         return this.productRepository.save(pr);
     }
 
-
     public Page<Product> fetchProduct(org.springframework.data.domain.Pageable pageable) {
         return this.productRepository.findAll(pageable);
     }
@@ -58,9 +57,28 @@ public class ProductService {
         return this.productRepository.findAll(ProductSpec.nameLike(name), pageable);
     }
 
-    public Page<Product> fetchProducts2(org.springframework.data.domain.Pageable pageable, String factory) {
-        return this.productRepository.findAll(ProductSpec.factoryLike(factory), pageable);
-    }
+    // Case 2
+    // public Page<Product> fetchProducts(org.springframework.data.domain.Pageable pageable, String factory) {
+    //     if (factory == null || factory.isEmpty()) {
+    //         return this.productRepository.findAll(pageable);
+    //     }
+    //     return this.productRepository.findAll(ProductSpec.factoryLike(factory), pageable);
+    // }
+
+    // Case 1
+    //  public Page<Product> fetchProducts(org.springframework.data.domain.Pageable pageable, double price) {
+    //     if (price == 0) {
+    //         return this.productRepository.findAll(pageable);
+    //     }
+    //     return this.productRepository.findAll(ProductSpec.priceGreaterThanorEqual(price), pageable);
+    
+    // Case 3
+    // public Page<Product> fetchProducts(org.springframework.data.domain.Pageable pageable, List<String> listFactory) {
+    //     if (listFactory.isEmpty()) {
+    //         return this.productRepository.findAll(pageable);
+    //     }
+    //     return this.productRepository.findAll(ProductSpec.matchListFactory(listFactory), pageable);
+    // }
 
     public List<Product> FindAllProducts() {
         return this.productRepository.findAll();

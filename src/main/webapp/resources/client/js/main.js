@@ -45,71 +45,71 @@
 
 
     // Testimonial carousel
-    $(".testimonial-carousel").owlCarousel({
-        autoplay: true,
-        smartSpeed: 2000,
-        center: false,
-        dots: true,
-        loop: true,
-        margin: 25,
-        nav: true,
-        navText: [
-            '<i class="bi bi-arrow-left"></i>',
-            '<i class="bi bi-arrow-right"></i>'
-        ],
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            576: {
-                items: 1
-            },
-            768: {
-                items: 1
-            },
-            992: {
-                items: 2
-            },
-            1200: {
-                items: 2
-            }
-        }
-    });
+    // $(".testimonial-carousel").owlCarousel({
+    //     autoplay: true,
+    //     smartSpeed: 2000,
+    //     center: false,
+    //     dots: true,
+    //     loop: true,
+    //     margin: 25,
+    //     nav: true,
+    //     navText: [
+    //         '<i class="bi bi-arrow-left"></i>',
+    //         '<i class="bi bi-arrow-right"></i>'
+    //     ],
+    //     responsiveClass: true,
+    //     responsive: {
+    //         0: {
+    //             items: 1
+    //         },
+    //         576: {
+    //             items: 1
+    //         },
+    //         768: {
+    //             items: 1
+    //         },
+    //         992: {
+    //             items: 2
+    //         },
+    //         1200: {
+    //             items: 2
+    //         }
+    //     }
+    // });
 
 
-    // vegetable carousel
-    $(".vegetable-carousel").owlCarousel({
-        autoplay: true,
-        smartSpeed: 1500,
-        center: false,
-        dots: true,
-        loop: true,
-        margin: 25,
-        nav: true,
-        navText: [
-            '<i class="bi bi-arrow-left"></i>',
-            '<i class="bi bi-arrow-right"></i>'
-        ],
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            576: {
-                items: 1
-            },
-            768: {
-                items: 2
-            },
-            992: {
-                items: 3
-            },
-            1200: {
-                items: 4
-            }
-        }
-    });
+    // // vegetable carousel
+    // $(".vegetable-carousel").owlCarousel({
+    //     autoplay: true,
+    //     smartSpeed: 1500,
+    //     center: false,
+    //     dots: true,
+    //     loop: true,
+    //     margin: 25,
+    //     nav: true,
+    //     navText: [
+    //         '<i class="bi bi-arrow-left"></i>',
+    //         '<i class="bi bi-arrow-right"></i>'
+    //     ],
+    //     responsiveClass: true,
+    //     responsive: {
+    //         0: {
+    //             items: 1
+    //         },
+    //         576: {
+    //             items: 1
+    //         },
+    //         768: {
+    //             items: 2
+    //         },
+    //         992: {
+    //             items: 3
+    //         },
+    //         1200: {
+    //             items: 4
+    //         }
+    //     }
+    // });
 
 
     // Modal Video
@@ -146,6 +146,80 @@
     //     }
     //     button.parent().parent().find('input').val(newVal);
     // });
+
+    console.log("MAIN JS ĐÃ CHẠY");
+
+$("#btnFilter").click(function (event) {
+
+    event.preventDefault();
+
+     console.log("ĐÃ CLICK FILTER");
+
+    let factoryArr = [];
+    let targetArr = [];
+    let priceArr = [];
+
+    // factory filter
+    $("#factoryFilter .form-check-input:checked").each(function () {
+        factoryArr.push($(this).val());
+    });
+
+    // target filter
+    $("#targetFilter .form-check-input:checked").each(function () {
+        targetArr.push($(this).val());
+    });
+
+    // price filter
+    $("#priceFilter .form-check-input:checked").each(function () {
+        priceArr.push($(this).val());
+    });
+
+    // sort order
+    let sortValue = $('input[name="radio-sort"]:checked').val();
+
+    // current URL
+    const currentUrl = new URL(window.location.href);
+    const searchParams = currentUrl.searchParams;
+
+    // page = 1
+    searchParams.set('page', '1');
+
+    // sort
+    if (sortValue) {
+        searchParams.set('sort', sortValue);
+    }
+
+    // factory
+    if (factoryArr.length > 0) {
+        searchParams.set('factory', factoryArr.join(','));
+    } else {
+        searchParams.delete('factory');
+    }
+
+    // target
+    if (targetArr.length > 0) {
+        searchParams.set('target', targetArr.join(','));
+    } else {
+        searchParams.delete('target');
+    }
+
+    // price
+    if (priceArr.length > 0) {
+        searchParams.set('price', priceArr.join(','));
+    } else {
+        searchParams.delete('price');
+    }
+
+    console.log("factory:", factoryArr);
+    console.log("target:", targetArr);
+    console.log("price:", priceArr);
+    console.log("sort:", sortValue);
+    console.log("URL:", currentUrl.toString());
+
+    // reload page
+    window.location.href = currentUrl.toString();
+});
+
     $('.quantity button').on('click', function () {
         console.log("ĐÃ BẤM NÚT");
         let change = 0;

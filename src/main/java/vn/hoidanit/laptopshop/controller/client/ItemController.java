@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,8 +147,11 @@ public class ItemController {
     @GetMapping("/products")
     public String getDashboard(
             Model model,
-            @RequestParam("page") Optional<String> pageOptional) {
+            @RequestParam("page") Optional<String> pageOptional,
+            @RequestParam("factory") Optional<String> factoryOptional,
+            @RequestParam("min_price") Optional<String> min_priceOptional) {
         int page = 1;
+        String factory = "";
         try {
             if (pageOptional.isPresent()) {
                 page = Integer.parseInt(pageOptional.get());
@@ -157,10 +161,15 @@ public class ItemController {
         } catch (Exception e) {
             // Page = 1
         }
+        if (factoryOptional.isPresent()) {
+            factory = factoryOptional.get();
+        }
 
         Pageable pageable = PageRequest.of(page - 1, 5);
+        // double price = min_priceOptional.isPresent() ?
+        // Double.parseDouble(min_priceOptional.get()) : 0;
 
-        Page<Product> prs = productService.fetchProduct(pageable);
+        Page<Product> prs = this.productService.fetchProduct(pageable);
         List<Product> listProducts = prs.getContent();
 
         model.addAttribute("products", listProducts);

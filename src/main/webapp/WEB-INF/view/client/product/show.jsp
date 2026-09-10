@@ -180,13 +180,13 @@
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" id="sort-3"
-                                                        value="gia-nothing" name="radio-sort" checked>
+                                                        value="gia-nothing" name="radio-sort">
                                                     <label class="form-check-label" for="sort-3">Không sắp xếp</label>
                                                 </div>
 
                                             </div>
                                             <div class="col-12">
-                                                <button id="btnFilter"
+                                                <button type="button" id="btnFilter"
                                                     class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
                                                     Lọc Sản Phẩm
                                                 </button>
