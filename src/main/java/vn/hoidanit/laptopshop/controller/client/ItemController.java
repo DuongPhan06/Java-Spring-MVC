@@ -21,6 +21,7 @@ import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.hoidanit.laptopshop.repository.CartDetailRepository;
 import vn.hoidanit.laptopshop.service.CartService;
 import vn.hoidanit.laptopshop.service.ProductService;
@@ -146,28 +147,20 @@ public class ItemController {
 
     @GetMapping("/products")
     public String getDashboard(
-            Model model,
-            @RequestParam("page") Optional<String> pageOptional,
-            @RequestParam("factory") Optional<String> factoryOptional,
-            @RequestParam("min_price") Optional<String> min_priceOptional) {
+            Model model, ProductCriteriaDTO productCriteriaDTO) {
         int page = 1;
         String factory = "";
         try {
-            if (pageOptional.isPresent()) {
-                page = Integer.parseInt(pageOptional.get());
+            if (productCriteriaDTO.getPage().isPresent()) {
+                page = Integer.parseInt(productCriteriaDTO.getPage().get());
             } else {
                 // Page = 1
             }
         } catch (Exception e) {
             // Page = 1
         }
-        if (factoryOptional.isPresent()) {
-            factory = factoryOptional.get();
-        }
 
         Pageable pageable = PageRequest.of(page - 1, 5);
-        // double price = min_priceOptional.isPresent() ?
-        // Double.parseDouble(min_priceOptional.get()) : 0;
 
         Page<Product> prs = this.productService.fetchProduct(pageable);
         List<Product> listProducts = prs.getContent();
